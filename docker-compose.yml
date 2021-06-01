@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  core:
+    build:
+      context: core
+    container_name: core
+    expose:
+      - "8008"
+      - "8007"
+    ports:
+      - "8008:8008"
+      - "8007:8007"
+    networks:
+      - "metadefender-network"
+    mem_limit: 1G
+
+  node:
+    build:
+      context: node
+    depends_on:
+      - core
+    networks:
+      - "metadefender-network"
+    mem_limit: 1G
+
+networks:
+  metadefender-network:
+    driver: nat
+    name: metadefender-network
+
